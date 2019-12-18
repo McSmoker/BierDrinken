@@ -266,44 +266,6 @@
             }
         },
         {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/704185ff3aab46e6b2e2b8967790fcf6')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2019-12-18T12:08:28.5208107Z",
-                "end_time": "2019-12-18T12:08:29.4157186Z",
-                "active": true
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/dce7823105024b8bb00c5e51c715b0f8')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author_email": "N/A",
-                "author": "N/A",
-                "deployer": "Push-Deployer",
-                "message": "Created via a push deployment",
-                "start_time": "2019-12-10T10:59:34.0365675Z",
-                "end_time": "2019-12-10T10:59:40.6545138Z",
-                "active": false
-            }
-        },
-        {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2018-11-01",
             "name": "[concat(parameters('sites_BierApi_name'), '/', parameters('sites_BierApi_name'), '.azurewebsites.net')]",
