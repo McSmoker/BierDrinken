@@ -32,17 +32,6 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Azure for Students(7363123e-592e-4880-bb51-c1e42f5d53ac)'
-    subscriptionId: '7363123e-592e-4880-bb51-c1e42f5d53ac'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'BierDrinken'
-    location: 'West Europe'
-    templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/McSmoker/BierDrinken/master/Deployment/Template'
-    deploymentMode: 'Complete'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
