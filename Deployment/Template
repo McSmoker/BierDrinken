@@ -31,7 +31,7 @@
                 "tier": "Standard"
             },
             "properties": {
-                "x-ms-client-id": "12feeadb-52d6-495b-8490-50d497635e24"
+                "x-ms-client-id": "e79f7f48-66ac-4150-9f16-9e1a20f4df01"
             }
         },
         {
@@ -178,7 +178,7 @@
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
                 "publishingUsername": "$BierApi",
-                "scmType": "None",
+                "scmType": "VSTSRM",
                 "use32BitWorkerProcess": true,
                 "webSocketsEnabled": false,
                 "alwaysOn": false,
@@ -263,6 +263,108 @@
                 "reservedInstanceCount": 0,
                 "fileChangeAuditEnabled": false,
                 "functionsRuntimeScaleMonitoringEnabled": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_BierApi_name'), '/c80a787c7d1d42ae956f460085a1782e')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "Push-Deployer",
+                "message": "Created via a push deployment",
+                "start_time": "2019-12-18T13:29:42.6938876Z",
+                "end_time": "2019-12-18T13:29:43.8032525Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_BierApi_name'), '/dd087ef4947f4a2eab617b7aa94ccfe9')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"deployment\",\"commitId\":\"cc8f9b1e002428e1ae4c2311a8e87276f3921ed5\",\"buildId\":\"45\",\"releaseId\":\"8\",\"buildNumber\":\"20191218.2\",\"releaseName\":\"Release-8\",\"repoProvider\":\"GitHub\",\"repoName\":\"McSmoker/BierDrinken\",\"collectionUrl\":\"https://dev.azure.com/585723/\",\"teamProject\":\"60b75cf5-e76a-48a9-becc-2f2d6d8e9067\",\"buildProjectUrl\":\"https://dev.azure.com/585723/60b75cf5-e76a-48a9-becc-2f2d6d8e9067\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BierDeployment\",\"slotName\":\"production\"}",
+                "start_time": "2019-12-18T13:27:56.9555629Z",
+                "end_time": "2019-12-18T13:27:57.941676Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_BierApi_name'), '/Bierfunction')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+            ],
+            "properties": {
+                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/Bierfunction/",
+                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
+                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/Bierfunction/function.json",
+                "href": "https://bierapi.azurewebsites.net/admin/functions/Bierfunction",
+                "config": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_BierApi_name'), '/HomePage')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+            ],
+            "properties": {
+                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/HomePage/",
+                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
+                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/HomePage/function.json",
+                "href": "https://bierapi.azurewebsites.net/admin/functions/HomePage",
+                "config": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_BierApi_name'), '/KaartFunction')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+            ],
+            "properties": {
+                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/KaartFunction/",
+                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
+                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/KaartFunction/function.json",
+                "href": "https://bierapi.azurewebsites.net/admin/functions/KaartFunction",
+                "config": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('sites_BierApi_name'), '/WeerFunction')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+            ],
+            "properties": {
+                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/WeerFunction/",
+                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
+                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/WeerFunction/function.json",
+                "href": "https://bierapi.azurewebsites.net/admin/functions/WeerFunction",
+                "config": {}
             }
         },
         {
