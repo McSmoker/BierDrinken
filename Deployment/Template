@@ -31,7 +31,7 @@
                 "tier": "Standard"
             },
             "properties": {
-                "x-ms-client-id": "e79f7f48-66ac-4150-9f16-9e1a20f4df01"
+                "x-ms-client-id": "71882b21-1c97-46ff-b88c-c0496a354af2"
             }
         },
         {
@@ -263,70 +263,6 @@
                 "reservedInstanceCount": 0,
                 "fileChangeAuditEnabled": false,
                 "functionsRuntimeScaleMonitoringEnabled": false
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/functions",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/Bierfunction')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
-            ],
-            "properties": {
-                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/Bierfunction/",
-                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
-                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/Bierfunction/function.json",
-                "href": "https://bierapi.azurewebsites.net/admin/functions/Bierfunction",
-                "config": {}
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/functions",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/HomePage')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
-            ],
-            "properties": {
-                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/HomePage/",
-                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
-                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/HomePage/function.json",
-                "href": "https://bierapi.azurewebsites.net/admin/functions/HomePage",
-                "config": {}
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/functions",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/KaartFunction')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
-            ],
-            "properties": {
-                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/KaartFunction/",
-                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
-                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/KaartFunction/function.json",
-                "href": "https://bierapi.azurewebsites.net/admin/functions/KaartFunction",
-                "config": {}
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/functions",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/WeerFunction')]",
-            "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
-            ],
-            "properties": {
-                "script_root_path_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/WeerFunction/",
-                "script_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/bin/BierWeerPoging2.dll",
-                "config_href": "https://bierapi.azurewebsites.net/admin/vfs/site/wwwroot/WeerFunction/function.json",
-                "href": "https://bierapi.azurewebsites.net/admin/functions/WeerFunction",
-                "config": {}
             }
         },
         {
