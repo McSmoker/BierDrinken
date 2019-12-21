@@ -29,7 +29,7 @@ namespace BierWeerPoging2
 
             string html = @"
             <html>
-                <head><title>BIER?!</title></head>
+                <head><title>BIER?!WAAAAAT</title></head>
                     <body>
                         <h1>VUL IN WAAR JE WOONT</h1>
                             <form action=""/api/bierfunction"">
