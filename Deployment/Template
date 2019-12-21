@@ -44,27 +44,35 @@
                 "tier": "Standard"
             },
             "kind": "StorageV2",
-            "properties": {
-                "networkAcls": {
-                    "bypass": "AzureServices",
-                    "virtualNetworkRules": [],
-                    "ipRules": [],
-                    "defaultAction": "Allow"
+          "properties": {
+            "siteConfig": {
+              "connectionStrings": [
+                {
+                  "name": "ConnString1",
+                  "connectionString": "DefaultEndpointsProtocol=https;AccountName=bierstorage;AccountKey=rdA5ry9egF6GzSV5awgPp0I8svuQJBxKqrdXgtss2+/ZNzLKRUFSMLFuPA58r/gf/5+CvSqQaUoVw2F5xXcYCg==;EndpointSuffix=core.windows.net"
+                }
+              ]
+            },
+            "networkAcls": {
+              "bypass": "AzureServices",
+              "virtualNetworkRules": [],
+              "ipRules": [],
+              "defaultAction": "Allow"
+            },
+            "supportsHttpsTrafficOnly": true,
+            "encryption": {
+              "services": {
+                "file": {
+                  "enabled": true
                 },
-                "supportsHttpsTrafficOnly": true,
-                "encryption": {
-                    "services": {
-                        "file": {
-                            "enabled": true
-                        },
-                        "blob": {
-                            "enabled": true
-                        }
-                    },
-                    "keySource": "Microsoft.Storage"
-                },
-                "accessTier": "Hot"
-            }
+                "blob": {
+                  "enabled": true
+                }
+              },
+              "keySource": "Microsoft.Storage"
+            },
+            "accessTier": "Hot"
+          }
         },
         {
             "type": "Microsoft.Web/serverfarms",
