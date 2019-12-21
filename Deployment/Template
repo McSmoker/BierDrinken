@@ -155,9 +155,9 @@
                     "value": "~2"
                   },
                   {
-              "name": "AzureWebJobsStorage",
-              "value": "fakestring"
-            }
+                    "name": "AzureWebJobsStorage",
+                    "value": "DefaultEndpointsProtocol=https;AccountName=bierstorage;AccountKey=22oMyuDmFFlOgjTtFNWtB6hWUPWwISIh0MStBEjA0Xl1uxzvKxlqtlfPBgcg0FprQuPm2pJpZXFXi4L8EhOWJQ==;EndpointSuffix=core.windows.net"
+                  }
                 ]
               }
             }
