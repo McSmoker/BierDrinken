@@ -19,7 +19,11 @@
             "type": "String"
         }
     },
-    "variables": {},
+  "variables": {
+
+    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
+    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+  },
     "resources": [
         {
             "type": "Microsoft.Maps/accounts",
