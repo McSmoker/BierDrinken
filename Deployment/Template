@@ -153,6 +153,10 @@
                   {
                     "name": "FUNCTIONS_EXTENSION_VERSION",
                     "value": "~2"
+                  },
+                  {
+                    "name": "AzureWebJobsStorage",
+                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid')]"
                   }
                 ]
               }
