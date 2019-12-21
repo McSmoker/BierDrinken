@@ -118,34 +118,41 @@
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]"
             ],
             "kind": "functionapp",
-            "properties": {
-                "enabled": true,
-                "hostNameSslStates": [
-                    {
-                        "name": "bierapi.azurewebsites.net",
-                        "sslState": "Disabled",
-                        "hostType": "Standard"
-                    },
-                    {
-                        "name": "bierapi.scm.azurewebsites.net",
-                        "sslState": "Disabled",
-                        "hostType": "Repository"
-                    }
-                ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]",
-                "reserved": false,
-                "isXenon": false,
-                "hyperV": false,
-                "scmSiteAlsoStopped": false,
-                "clientAffinityEnabled": true,
-                "clientCertEnabled": false,
-                "hostNamesDisabled": false,
-                "containerSize": 1536,
-                "dailyMemoryTimeQuota": 0,
-                "httpsOnly": false,
-                "redundancyMode": "None"
+          "properties": {
+            "enabled": true,
+            "hostNameSslStates": [
+              {
+                "name": "bierapi.azurewebsites.net",
+                "sslState": "Disabled",
+                "hostType": "Standard"
+              },
+              {
+                "name": "bierapi.scm.azurewebsites.net",
+                "sslState": "Disabled",
+                "hostType": "Repository"
+              }
+            ],
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]",
+            "reserved": false,
+            "isXenon": false,
+            "hyperV": false,
+            "scmSiteAlsoStopped": false,
+            "clientAffinityEnabled": true,
+            "clientCertEnabled": false,
+            "hostNamesDisabled": false,
+            "containerSize": 1536,
+            "dailyMemoryTimeQuota": 0,
+            "httpsOnly": false,
+            "redundancyMode": "None",
+            "siteConfig": {
+              "appSettings": [
+                {
+                  "name": "FUNCTIONS_EXTENSION_VERSION",
+                  "value": "~2"
+                }
+              ]
             }
-        },
+          },
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2018-11-01",
