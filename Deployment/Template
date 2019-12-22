@@ -21,7 +21,7 @@
     },
   "variables": {
 
-    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
+    "storageAccountName": "bierstorage",
     "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', 'bierstorage')]"
   },
     "resources": [
