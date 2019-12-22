@@ -11,6 +11,9 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Blob;
 using BierWeerPoging2.Models;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace BierWeerPoging2
 {
@@ -55,7 +58,8 @@ namespace BierWeerPoging2
             }
             catch(Exception e)
             {
-                return new BadRequestObjectResult(e);
+                Exception customException = new Exception(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
+                return new BadRequestObjectResult(customException);
             }
         }
 
