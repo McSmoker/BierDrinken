@@ -160,7 +160,7 @@
                 },
                 {
                   "name": "AzureWebJobsStorage",
-                  "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', bierstorage)), '2015-06-15').key1)]"
+                  "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', 'bierstorage')), '2015-06-15').key1)]"
                 }
               ]
             }
