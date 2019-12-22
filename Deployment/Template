@@ -122,45 +122,48 @@
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]"
             ],
             "kind": "functionapp",
-            "properties": {
-                "enabled": true,
-                "hostNameSslStates": [
-                    {
-                        "name": "bierapi.azurewebsites.net",
-                        "sslState": "Disabled",
-                        "hostType": "Standard"
-                    },
-                    {
-                        "name": "bierapi.scm.azurewebsites.net",
-                        "sslState": "Disabled",
-                        "hostType": "Repository"
-                    }
-                ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]",
-                "reserved": false,
-                "isXenon": false,
-                "hyperV": false,
-                "scmSiteAlsoStopped": false,
-                "clientAffinityEnabled": true,
-                "clientCertEnabled": false,
-                "hostNamesDisabled": false,
-                "containerSize": 1536,
-                "dailyMemoryTimeQuota": 0,
-                "httpsOnly": false,
-              "redundancyMode": "None",
-              "siteConfig": {
-                "appSettings": [
-                  {
-                    "name": "FUNCTIONS_EXTENSION_VERSION",
-                    "value": "~2"
-                  },
-                  {
-                    "name": "AzureWebJobsStorage",
-                    "value": "DefaultEndpointsProtocol=https;AccountName=bierstorage;AccountKey= [listKeys(variables('storageAccountId'), '2018-11-01').keys[0].value];EndpointSuffix=core.windows.net"
-                  }
-                ]
+          "properties": {
+            "enabled": true,
+            "parameterValues": {
+              "accessKey": "[listKeys(variables('storageAccountId'), '2018-11-01').keys[0].value]"
+            },
+            "hostNameSslStates": [
+              {
+                "name": "bierapi.azurewebsites.net",
+                "sslState": "Disabled",
+                "hostType": "Standard"
+              },
+              {
+                "name": "bierapi.scm.azurewebsites.net",
+                "sslState": "Disabled",
+                "hostType": "Repository"
               }
+            ],
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]",
+            "reserved": false,
+            "isXenon": false,
+            "hyperV": false,
+            "scmSiteAlsoStopped": false,
+            "clientAffinityEnabled": true,
+            "clientCertEnabled": false,
+            "hostNamesDisabled": false,
+            "containerSize": 1536,
+            "dailyMemoryTimeQuota": 0,
+            "httpsOnly": false,
+            "redundancyMode": "None",
+            "siteConfig": {
+              "appSettings": [
+                {
+                  "name": "FUNCTIONS_EXTENSION_VERSION",
+                  "value": "~2"
+                },
+                {
+                  "name": "AzureWebJobsStorage",
+                  "value": "DefaultEndpointsProtocol=https;AccountName=bierstorage;AccountKey= [parameters('accessKey')], '2018-11-01').keys[0].value];EndpointSuffix=core.windows.net"
+                }
+              ]
             }
+          }
         },
         {
             "type": "Microsoft.Web/sites/config",
