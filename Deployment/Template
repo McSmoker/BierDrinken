@@ -22,7 +22,8 @@
   "variables": {
 
     "storageAccountName": "bierstorage",
-    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', 'bierstorage')]"
+    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', 'bierstorage')]",
+    "mapAccountName": "azuremaps"
   },
     "resources": [
         {
@@ -161,6 +162,10 @@
                 {
                   "name": "AzureWebJobsStorage",
                   "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value)]"
+                },
+                {
+                  "name": "MapKey",
+                  "value": "listKeys(resourceId('Microsoft.Maps/accounts', variables('mapAccountName')), '2018-05-01').keys[0].value)]"
                 }
               ]
             }
