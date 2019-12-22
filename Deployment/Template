@@ -118,9 +118,10 @@
             "apiVersion": "2018-11-01",
             "name": "[parameters('sites_BierApi_name')]",
             "location": "West Europe",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]"
-            ],
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_bierstorage_name'))]"
+          ],
             "kind": "functionapp",
           "properties": {
             "enabled": true,
