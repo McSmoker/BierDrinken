@@ -22,7 +22,7 @@
   "variables": {
 
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
-    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', 'bierstorage']"
   },
     "resources": [
         {
@@ -156,7 +156,7 @@
                   },
                   {
                     "name": "AzureWebJobsStorage",
-                    "value": "DefaultEndpointsProtocol=https;AccountName=bierstorage;AccountKey=22oMyuDmFFlOgjTtFNWtB6hWUPWwISIh0MStBEjA0Xl1uxzvKxlqtlfPBgcg0FprQuPm2pJpZXFXi4L8EhOWJQ==;EndpointSuffix=core.windows.net"
+                    "value": "DefaultEndpointsProtocol=https;AccountName=bierstorage;AccountKey= [listKeys(variables('storageAccountId'), '2018-11-01').keys[0].value];EndpointSuffix=core.windows.net"
                   }
                 ]
               }
