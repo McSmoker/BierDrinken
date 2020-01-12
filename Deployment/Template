@@ -165,7 +165,7 @@
                 },
                 {
                   "name": "MapKey",
-                  "value": "[listKeys(resourceId('Microsoft.Maps/accounts', variables('mapAccountName')), '2018-05-01').keys[0].value)]"
+                  "value": "listKeys(variables('mapAccountName')), '2018-05-01').keys[0].value)"
                 },
                 {
                   "name": "WeatherKey",
