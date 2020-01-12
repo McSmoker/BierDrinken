@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_BierApi_name": {
-            "defaultValue": "BierApiAnne",
+            "defaultValue": "BierApi",
             "type": "String"
         },
         "accounts_azuremaps_name": {
@@ -131,12 +131,12 @@
             },
             "hostNameSslStates": [
               {
-                "name": "bierapi.azurewebsites.net",
+                "name": "bierapianne.azurewebsites.net",
                 "sslState": "Disabled",
                 "hostType": "Standard"
               },
               {
-                "name": "bierapi.scm.azurewebsites.net",
+                "name": "bierapianne.scm.azurewebsites.net",
                 "sslState": "Disabled",
                 "hostType": "Repository"
               }
