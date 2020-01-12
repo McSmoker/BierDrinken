@@ -165,7 +165,7 @@
                 },
                 {
                   "name": "MapKey",
-                  "value": "[listKeys(resourceId('Microsoft.Maps/accounts'), '2018-05-01').keys[0].value)"
+                  "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value)]"
                 },
                 {
                   "name": "WeatherKey",
