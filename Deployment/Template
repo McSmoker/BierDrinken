@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_BierApi_name": {
-            "defaultValue": "BierApi",
+            "defaultValue": "BierApiAnne",
             "type": "String"
         },
         "accounts_azuremaps_name": {
