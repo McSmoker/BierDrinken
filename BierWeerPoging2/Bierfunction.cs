@@ -28,7 +28,8 @@ namespace BierWeerPoging2
             if (req.Query["city"]== "")
             {
                 Exception customException = new Exception("de city naam was leeg voer een astublieft een naam in");
-                return new BadRequestObjectResult(customException);
+                Exception testingshit = new Exception(Environment.GetEnvironmentVariable("MapKey"));
+                return new BadRequestObjectResult(testingshit);
             }
             string cityName = req.Query["city"];
 

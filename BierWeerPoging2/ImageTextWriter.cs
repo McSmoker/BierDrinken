@@ -27,9 +27,9 @@ namespace BierWeerPoging2
             {
                 paint.Color = SKColors.Blue;
                 paint.TextAlign = SKTextAlign.Center;
-                paint.TextSize = 48;
+                paint.TextSize = 16;
 
-                canvas.DrawText(textToWrite, 10, 50, paint);
+                canvas.DrawText(textToWrite, 250, 50, paint);
             }
 
             //
