@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_BierApi_name": {
-            "defaultValue": "BierApi",
+            "defaultValue": "BierApiAnne",
             "type": "String"
         },
         "accounts_azuremaps_name": {
@@ -206,7 +206,7 @@
                 "httpLoggingEnabled": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$BierApi",
+                "publishingUsername": "$BierApiAnne",
                 "scmType": "VSTSRM",
                 "use32BitWorkerProcess": true,
                 "webSocketsEnabled": false,
@@ -303,7 +303,7 @@
                 "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
             ],
             "properties": {
-                "siteName": "BierApi",
+                "siteName": "BierApiAnne",
                 "hostNameType": "Verified"
             }
         },
