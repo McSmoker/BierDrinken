@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "sites_BierApi_name": {
+        "sites_BierApiAnne_name": {
             "defaultValue": "BierApiAnne",
             "type": "String"
         },
@@ -117,7 +117,7 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
-            "name": "[parameters('sites_BierApi_name')]",
+            "name": "[parameters('sites_BierApiAnne_name')]",
             "location": "West Europe",
           "dependsOn": [
             "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BierDrinken_b801_name'))]",
@@ -178,10 +178,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/web')]",
+            "name": "[concat(parameters('sites_BierApiAnne_name'), '/web')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApiAnne_name'))]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -297,10 +297,10 @@
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_BierApi_name'), '/', parameters('sites_BierApi_name'), '.azurewebsites.net')]",
+            "name": "[concat(parameters('sites_BierApiAnne_name'), '/', parameters('sites_BierApiAnne_name'), '.azurewebsites.net')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApi_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BierApiAnne_name'))]"
             ],
             "properties": {
                 "siteName": "BierApiAnne",
