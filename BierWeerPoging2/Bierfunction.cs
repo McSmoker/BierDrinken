@@ -24,11 +24,13 @@ namespace BierWeerPoging2
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            //get cityname and country from query (e.g. bier?city=harlem&country=netherland)
-            //string cityName = req.Query["city"];
+            //input validatie
+            if (req.Query["city"]== "")
+            {
+                Exception customException = new Exception("de city naam was leeg voer een astublieft een naam in");
+                return new BadRequestObjectResult(customException);
+            }
             string cityName = req.Query["city"];
-            //TODO input validatie
-            //if cityname==null ofzo
 
             //input transformatie
             cityName = cityName.ToLower();
@@ -58,7 +60,7 @@ namespace BierWeerPoging2
             }
             catch(Exception e)
             {
-                Exception customException = new Exception(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
+                Exception customException = new Exception("er iets fout gegaan probeer het later opnieuw");
                 return new BadRequestObjectResult(customException);
             }
         }
@@ -115,11 +117,11 @@ namespace BierWeerPoging2
             CloudBlobContainer blobContainer = blobClient.GetContainerReference(blobReference);
             await blobContainer.CreateIfNotExistsAsync();
 
-            //Todo Delete als onnodig is
-            //BlobContainerPermissions permissions = new BlobContainerPermissions
-            //{
-            //    PublicAccess = BlobContainerPublicAccessType.Off
-            //};
+            //zorgt ervoor dat de blob alleen geaccest kan worden door deze client
+            BlobContainerPermissions permissions = new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Off
+            };
 
             //await blobContainer.SetPermissionsAsync(permissions);
             return blobContainer;
