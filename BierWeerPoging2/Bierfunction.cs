@@ -25,6 +25,23 @@ namespace BierWeerPoging2
             ILogger log)
         {
             string cityName = req.Query["city"];
+            //check of city echt is
+            string openweatherapikey = Environment.GetEnvironmentVariable("WeatherKey");
+
+            string url = String.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&units=metric",
+                cityName);
+
+            HttpClient clientCheck = new HttpClient();
+
+            clientCheck.DefaultRequestHeaders.Add("X-API-KEY", openweatherapikey);
+
+            HttpResponseMessage response = await clientCheck.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                Exception customException = new Exception("De ingevoerde naam bestaat niet");
+                return new BadRequestObjectResult(customException);
+            }
+
 
             //input transformatie
             cityName = cityName.ToLower();
@@ -118,5 +135,6 @@ namespace BierWeerPoging2
             await blobContainer.SetPermissionsAsync(security);
             return blobContainer;
         }
+
     }
 }
