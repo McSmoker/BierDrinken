@@ -30,10 +30,11 @@ namespace BierWeerPoging2
                 string key = Environment.GetEnvironmentVariable("MapKey");
                 string url = String.Format("https://atlas.microsoft.com/map/static/png?subscription-key={0}&api-version=1.0&center={1},{2}", key,
                 coordinates.Lon, coordinates.Lat);
+
+                
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(url);
                 Stream responseContent = await response.Content.ReadAsStreamAsync();
-
                 try
                 {
                     string textToWrite = GenerateBeerText(weatherRoot);
@@ -45,7 +46,8 @@ namespace BierWeerPoging2
                 {
                     using (System.Net.WebClient webClient = new System.Net.WebClient())
                     {
-                        using (Stream stream = webClient.OpenRead("http://pngimg.com/uploads/number3/number3_PNG14965.png"))
+                        using (Stream stream = webClient.OpenRead(String.Format("https://atlas.microsoft.com/map/static/png?subscription-key={0}&api-version=1.0&center={1},{2}", key,
+                        coordinates.Lon, coordinates.Lat)))
                         {
 
                             await cloudBlockBlob.UploadFromStreamAsync(stream);
