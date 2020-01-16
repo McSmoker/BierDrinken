@@ -98,7 +98,7 @@ namespace BierWeerPoging2
             //ben niet 100% zeker van deze implementatie maar was geen harde eis
             var security = blobContainer.GetSharedAccessSignature(new SharedAccessBlobPolicy()
             {
-                //Permissions = SharedAccessBlobPermissions.Read,
+                Permissions = SharedAccessBlobPermissions.Read,
                 SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(20)
             });
 
