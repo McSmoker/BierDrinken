@@ -17,12 +17,13 @@ namespace BierWeerPoging2
             ///sixlaborers.imagesharp kan wel volgens internet advies
             ///dat werkt ook niet
             ///beter werkt skiasharp
+            ///eureka
 
+            //maak canvasvanimage en plaats teksten
             SKBitmap sKBitmap = SKBitmap.Decode(responseContent);
-            //SKBitmap sKBitmap = new SKBitmap(900, 900);
             SKCanvas canvas = new SKCanvas(sKBitmap);
-            //
-            //
+
+
             using (SKPaint paint = new SKPaint())
             {
                 paint.Color = SKColors.Blue;
@@ -32,25 +33,12 @@ namespace BierWeerPoging2
                 canvas.DrawText(textToWrite, 250, 50, paint);
             }
 
-            //
-            //
-            // get the bitmap we want to convert to a stream
+            //vertaal die canvasimage/bitmap weer naar een stream
             SKBitmap bitmap = sKBitmap;
-
-            // create an image COPY
             SKImage image = SKImage.FromBitmap(bitmap);
-            // OR
-            // create an image WRAPPER
-            //SKImage image = SKImage.FromPixels(bitmap.PeekPixels());
-
-            // encode the image (defaults to PNG)
             SKData encoded = image.Encode();
-
-            // get a stream over the encoded data
             Stream stream = encoded.AsStream();
-            //
-            //
-            //
+
             return stream;
         }
     }

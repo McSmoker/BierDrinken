@@ -14,7 +14,7 @@ namespace BierWeerPoging2
     public static class WeerFunction
     {
         [FunctionName("WeerFunction")]
-        public static async Task RunAsync([QueueTrigger("Trigger-Weer-In", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
+        public static async Task RunAsync([QueueTrigger("trigger-weer-in", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
         {
 
             string openweatherapikey = Environment.GetEnvironmentVariable("WeatherKey");
@@ -53,7 +53,7 @@ namespace BierWeerPoging2
         private static async Task CreateQueueMessage(CloudQueueMessage queueMessage, CloudStorageAccount azureStorageAccount)
         {
             var cloudClient = azureStorageAccount.CreateCloudQueueClient();
-            var queu = cloudClient.GetQueueReference("Trigger-Kaart-In");
+            var queu = cloudClient.GetQueueReference("trigger-kaart-in");
             await queu.CreateIfNotExistsAsync();
 
             await queu.AddMessageAsync(queueMessage);

@@ -15,7 +15,7 @@ namespace BierWeerPoging2
     public static class KaartFunction
     {
         [FunctionName("KaartFunction")]
-        public static async Task RunAsync([QueueTrigger("Trigger-Kaart-In", Connection = "AzureWebjobsStorage")]string myQueueItem, ILogger log)
+        public static async Task RunAsync([QueueTrigger("trigger-kaart-in", Connection = "AzureWebjobsStorage")]string myQueueItem, ILogger log)
         {
             //weatherdata nodig om de locatie te bepalen
             WeatherMessage message = (WeatherMessage)JsonConvert.DeserializeObject(myQueueItem, typeof(WeatherMessage));

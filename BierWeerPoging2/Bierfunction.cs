@@ -65,7 +65,7 @@ namespace BierWeerPoging2
 
         private static async Task CreateQueueMessage(CloudQueueMessage cloudQueueMessage, CloudQueueClient client)
         {
-            string weerTrigger = "Trigger-Weer-In";
+            string weerTrigger = "trigger-weer-in";
             var cloudQueue = client.GetQueueReference(weerTrigger);
             await cloudQueue.CreateIfNotExistsAsync();
 
