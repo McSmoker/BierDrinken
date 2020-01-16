@@ -26,60 +26,33 @@ namespace BierWeerPoging2
             CloudBlockBlob cloudBlockBlob = await GetBlobStorage(message, storageAccount);
             try
             {
-                Stream responseContent = null;
-                try
-                {
-                    string key = Environment.GetEnvironmentVariable("MapKey");
-                    string url = String.Format("https://atlas.microsoft.com/map/static/png?subscription-key={0}&api-version=1.0&center={1},{2}", key,
-                        coordinates.Lon, coordinates.Lat);
-                }
-                catch
-                {
-                    using (System.Net.WebClient webClient = new System.Net.WebClient())
-                    {
-                        using (Stream stream = webClient.OpenRead("https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Un1.svg/120px-Un1.svg.png"))
-                        {
-                            
-                            await cloudBlockBlob.UploadFromStreamAsync(stream);
-                        }
-                    }
-                }
-                try
-                {
-                    string key = Environment.GetEnvironmentVariable("MapKey");
-                    string url = String.Format("https://atlas.microsoft.com/map/static/png?subscription-key={0}&api-version=1.0&center={1},{2}", key,
-                        coordinates.Lon, coordinates.Lat);
-                    HttpClient client = new HttpClient();
-                    HttpResponseMessage response = await client.GetAsync(url);
+                string key = Environment.GetEnvironmentVariable("MapKey");
+                string url = String.Format("https://atlas.microsoft.com/map/static/png?subscription-key={0}&api-version=1.0&center={1},{2}", key,
+                coordinates.Lon, coordinates.Lat);
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(url);
 
-                    responseContent = await response.Content.ReadAsStreamAsync();
+                Stream responseContent = await response.Content.ReadAsStreamAsync();
+                try
+                {
+                    string textToWrite = GenerateBeerText(weatherRoot);
+
+                    ImageTextWriter imageTextWriter = new ImageTextWriter();
+                    Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
+
+                    await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
                 }
                 catch
                 {
                     using (System.Net.WebClient webClient = new System.Net.WebClient())
                     {
-                        using (Stream stream = webClient.OpenRead("https://upload.wikimedia.org/wikipedia/commons/6/61/NYCS-bull-trans-2.svg"))
+                        using (Stream stream = webClient.OpenRead("http://pngimg.com/uploads/number3/number3_PNG14965.png"))
                         {
 
                             await cloudBlockBlob.UploadFromStreamAsync(stream);
                         }
                     }
                 }
-
-                using (System.Net.WebClient webClient = new System.Net.WebClient())
-                {
-                    using (Stream stream = webClient.OpenRead("http://pngimg.com/uploads/number3/number3_PNG14965.png"))
-                    {
-
-                        await cloudBlockBlob.UploadFromStreamAsync(stream);
-                    }
-                }
-                //string textToWrite = GenerateBeerText(weatherRoot);
-
-                //ImageTextWriter imageTextWriter = new ImageTextWriter();
-                //Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
-
-                //await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
             }
             catch (Exception e)
             {
