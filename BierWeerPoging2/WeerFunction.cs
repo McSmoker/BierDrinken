@@ -14,71 +14,56 @@ namespace BierWeerPoging2
     public static class WeerFunction
     {
         [FunctionName("WeerFunction")]
-        public static async Task RunAsync([QueueTrigger("locations-openweather-in", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
+        public static async Task RunAsync([QueueTrigger("Trigger-Weer-In", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
         {
 
-            try
+            string openweatherapikey = Environment.GetEnvironmentVariable("WeatherKey");
+            
+            LocationMessage message = JsonConvert.DeserializeObject<LocationMessage>(myQueueItem);
+            
+            string url = String.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&units=metric",
+                message.CityName);
+            
+            HttpClient client = new HttpClient();
+            
+            client.DefaultRequestHeaders.Add("X-API-KEY",openweatherapikey);
+            
+            HttpResponseMessage response = await client.GetAsync(url);
+            
+            if (response.IsSuccessStatusCode)
             {
-                string openweatherapikey = Environment.GetEnvironmentVariable("WeatherKey");
-
-                LocationMessage message = JsonConvert.DeserializeObject<LocationMessage>(myQueueItem);
-
-                //Todo delete this en fix hierboven
-                if(message.CityName == null)
-                {
-                    message.CityName = "haarlem";
-                }
-                try
-                {
-                    string url = String.Format("https://api.openweathermap.org/data/2.5/weather?q={0}&units=metric",
-                        message.CityName);
-
-
-                    HttpClient client = new HttpClient();
-
-                    client.DefaultRequestHeaders.Add("X-API-KEY",openweatherapikey);
-
-                    HttpResponseMessage response = await client.GetAsync(url);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string content = await response.Content.ReadAsStringAsync();
-                        CloudQueueMessage cloudQueueMessage = CreateCloudQueueMessage(message, content);
-
-                        var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
-                        await PostMessageToQueue(cloudQueueMessage, storageAccount);
-                    }
-                    else
-                    {
-                        log.LogInformation("What a terrible night for a curse");
-                    }
-                }
-                catch (Exception e)
-                {
-                    log.LogInformation(e.Data.ToString());
-                }
+                string content = await response.Content.ReadAsStringAsync();
+                CloudQueueMessage cloudQueueMessage = CreateCloudQueueMessage(message, content);
+            
+                var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
+                await CreateQueueMessage(cloudQueueMessage, storageAccount);
             }
-            catch (Exception e)
+            else
             {
-                log.LogInformation(e.Data.ToString());
+                //error handling voor als de weerapi kapot is
+                string content = "wat jammer nou de weer api is kapot";
+                CloudQueueMessage cloudQueueMessage = CreateCloudQueueMessage(message, content);
+            
+                var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
+                await CreateQueueMessage(cloudQueueMessage, storageAccount);
             }
-
+            
         }
 
-        private static async Task PostMessageToQueue(CloudQueueMessage cloudQueueMessage, CloudStorageAccount storageAccount)
+        private static async Task CreateQueueMessage(CloudQueueMessage queueMessage, CloudStorageAccount azureStorageAccount)
         {
-            var cloudClient = storageAccount.CreateCloudQueueClient();
-            var queue = cloudClient.GetQueueReference("locations-openweather-out");
-            await queue.CreateIfNotExistsAsync();
+            var cloudClient = azureStorageAccount.CreateCloudQueueClient();
+            var queu = cloudClient.GetQueueReference("Trigger-Kaart-In");
+            await queu.CreateIfNotExistsAsync();
 
-            await queue.AddMessageAsync(cloudQueueMessage);
+            await queu.AddMessageAsync(queueMessage);
         }
 
         private static CloudQueueMessage CreateCloudQueueMessage(LocationMessage messageParam, string content)
         {
             WeatherMessage message = CreateBlobTriggerMessage(messageParam, content);
-            var messageAsJson = JsonConvert.SerializeObject(message);
-            var cloudQueueMessage = new CloudQueueMessage(messageAsJson);
+            var messageJson = JsonConvert.SerializeObject(message);
+            var cloudQueueMessage = new CloudQueueMessage(messageJson);
             return cloudQueueMessage;
         }
 

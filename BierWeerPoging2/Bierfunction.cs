@@ -49,13 +49,10 @@ namespace BierWeerPoging2
                 string guid = Guid.NewGuid().ToString();
                 string blobUrl = await CreateCloudBlockBlob(guid);
 
-                log.LogInformation("Created cloud blob: {0}.png", guid);
-
                 CloudQueueMessage cloudQueueMessage = CreateApiMessage(cityName,blobUrl, guid);
                 CloudQueueClient client = azureStorageAccount.CreateCloudQueueClient();
-                await AddMessageToQueue(cloudQueueMessage, client);
+                await CreateQueueMessage(cloudQueueMessage, client);
 
-                log.LogInformation("Posted object in queue locations-openweather-in");
                 string result = String.Format("KAN JE HIER IN {0} BIERDRINKEN DEZE LINK GAAT JE DAT VERTELLEN G HIJ IS NIET AL TE LANG BESCHIKBAAR DUS WEES ER SNEL BIJ \n{1}", cityName,blobUrl);
                 return new OkObjectResult(result);
             }
@@ -66,10 +63,10 @@ namespace BierWeerPoging2
             }
         }
 
-        private static async Task AddMessageToQueue(CloudQueueMessage cloudQueueMessage, CloudQueueClient client)
+        private static async Task CreateQueueMessage(CloudQueueMessage cloudQueueMessage, CloudQueueClient client)
         {
-            string openWeatherIn = "locations-openweather-in";
-            var cloudQueue = client.GetQueueReference(openWeatherIn);
+            string weerTrigger = "Trigger-Weer-In";
+            var cloudQueue = client.GetQueueReference(weerTrigger);
             await cloudQueue.CreateIfNotExistsAsync();
 
             await cloudQueue.AddMessageAsync(cloudQueueMessage);
@@ -84,32 +81,33 @@ namespace BierWeerPoging2
                 Guid = guid
             };
 
-            var messageAsJson = JsonConvert.SerializeObject(message);
-            var cloudQueueMessage = new CloudQueueMessage(messageAsJson);
-            return cloudQueueMessage;
+            var messageJson = JsonConvert.SerializeObject(message);
+            var filledMessage = new CloudQueueMessage(messageJson);
+            return filledMessage;
         }
 
         private static async Task<string> CreateCloudBlockBlob(string guid)
         {
-            //Todo dit opzetten (misschien weghalen van blobcontainer deze wordt ook hier gemaakt?
-            var storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer blobContainer = blobClient.GetContainerReference("beerweather-blobs");
+
+            var azureStorageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
+            CloudBlobClient blobClient = azureStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference("blob-bier-weer");
             await blobContainer.CreateIfNotExistsAsync();
 
             //maakt het resultaat beschikbaar voor 20 minuten
-            var sas = blobContainer.GetSharedAccessSignature(new SharedAccessBlobPolicy()
+            //ben niet 100% zeker van deze implementatie maar was geen harde eis
+            var security = blobContainer.GetSharedAccessSignature(new SharedAccessBlobPolicy()
             {
                 Permissions = SharedAccessBlobPermissions.Read,
                 SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(20)
             });
 
             //maken van een url die gebruikt kan worden voor het opvragen van het resultaat
-            string fileName = String.Format("{0}.png", guid);
-            CloudBlockBlob cloudBlockBlob = blobContainer.GetBlockBlobReference(fileName);
+            string imageName = String.Format("{0}.png", guid);
+            CloudBlockBlob cloudBlockBlob = blobContainer.GetBlockBlobReference(imageName);
             cloudBlockBlob.Properties.ContentType = "image/png";
-            string imageUrl = string.Format("{0}/{1}{2}", blobContainer.StorageUri.PrimaryUri.AbsoluteUri, fileName, sas);
-            return imageUrl;
+            string imageUrlLocation = string.Format("{0}/{1}{2}", blobContainer.StorageUri.PrimaryUri.AbsoluteUri, imageName, security);
+            return imageUrlLocation;
         }
 
         private static async Task<CloudBlobContainer> CreateBlobContainer(CloudStorageAccount azureStorageAccount, string blobReference)
@@ -119,12 +117,12 @@ namespace BierWeerPoging2
             await blobContainer.CreateIfNotExistsAsync();
 
             //zorgt ervoor dat de blob alleen geaccest kan worden door deze client
-            BlobContainerPermissions permissions = new BlobContainerPermissions
+            BlobContainerPermissions security = new BlobContainerPermissions
             {
                 PublicAccess = BlobContainerPublicAccessType.Off
             };
-
-            //await blobContainer.SetPermissionsAsync(permissions);
+            //TODO zet aan of verwijder security hierboven
+            //await blobContainer.SetPermissionsAsync(security);
             return blobContainer;
         }
     }
