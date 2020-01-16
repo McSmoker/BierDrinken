@@ -52,7 +52,11 @@ namespace BierWeerPoging2
                 {
                     using (Stream stream = webClient.OpenRead("http://www.ajeforum.com/wp-content/uploads/2018/04/Error_Culture_Florent_Darrault2-640x478.jpg"))
                     {
-                        await cloudBlockBlob.UploadFromStreamAsync(stream);
+                        string textToWrite = "wss ligt de weer api er weer eens uit";
+
+                        ImageTextWriter imageTextWriter = new ImageTextWriter();
+                        Stream renderedImage = imageTextWriter.WriteTextOnImage(stream, textToWrite);
+                        await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
                     }
                 }
             }
