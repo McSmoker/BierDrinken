@@ -106,6 +106,9 @@ namespace BierWeerPoging2
         }
         private static Stream WriteTextOnImage(Stream responseContent, string textToWrite)
         {
+            //dit was om 1 of andere reden 1 van de moeilijkste onderdelen want NIKS werkt bijna met azure functions
+            //Elke forumpost raad dingen aan die niet MEER werken
+            //SKiaSharp werkt NU maar zodra microsoft daar achter komt zullen ze dat ook wel weer verpesten
             //maak canvasvanimage en plaats teksten
             SKBitmap sKBitmap = SKBitmap.Decode(responseContent);
             SKCanvas canvas = new SKCanvas(sKBitmap);

@@ -53,7 +53,7 @@ namespace BierWeerPoging2
                 CloudQueueClient client = azureStorageAccount.CreateCloudQueueClient();
                 await CreateQueueMessage(cloudQueueMessage, client);
 
-                string result = String.Format("Kan er hier {0} biergedronken worden Deze link bevat het antwoord: \n {1} \n De image is 20 minuten beschikbaar \n Als de image niet gevonden kan worden wacht dan een paar seconden en voer de link opnieuw in (dus niet refresh) ", cityName,blobUrl);
+                string result = String.Format("Kan er hier {0} biergedronken worden Deze link bevat het antwoord: \n {1} \n De image is 20 minuten beschikbaar \n Als de image niet gevonden kan worden wacht dan een paar seconden en voer de link opnieuw in", cityName,blobUrl);
                 return new OkObjectResult(result);
             }
             catch(Exception e)
@@ -122,7 +122,7 @@ namespace BierWeerPoging2
                 PublicAccess = BlobContainerPublicAccessType.Off
             };
             //TODO zet aan of verwijder security hierboven
-            //await blobContainer.SetPermissionsAsync(security);
+            await blobContainer.SetPermissionsAsync(security);
             return blobContainer;
         }
     }
