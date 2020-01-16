@@ -31,15 +31,14 @@ namespace BierWeerPoging2
                 coordinates.Lon, coordinates.Lat);
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(url);
-
                 Stream responseContent = await response.Content.ReadAsStreamAsync();
+
+                string textToWrite = GenerateBeerText(weatherRoot);
+
+                ImageTextWriter imageTextWriter = new ImageTextWriter();
+                Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
                 try
                 {
-                    string textToWrite = GenerateBeerText(weatherRoot);
-
-                    ImageTextWriter imageTextWriter = new ImageTextWriter();
-                    Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
-
                     await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
                 }
                 catch
