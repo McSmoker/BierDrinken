@@ -24,13 +24,6 @@ namespace BierWeerPoging2
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            //input validatie
-            if (req.Query["city"]== "")
-            {
-                Exception customException = new Exception("de city naam was leeg voer een astublieft een naam in");
-                Exception testingshit = new Exception(Environment.GetEnvironmentVariable("MapKey"));
-                return new BadRequestObjectResult(testingshit);
-            }
             string cityName = req.Query["city"];
 
             //input transformatie
