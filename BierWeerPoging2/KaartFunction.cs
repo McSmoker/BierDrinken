@@ -33,12 +33,30 @@ namespace BierWeerPoging2
                 HttpResponseMessage response = await client.GetAsync(url);
                 Stream responseContent = await response.Content.ReadAsStreamAsync();
 
-                string textToWrite = GenerateBeerText(weatherRoot);
-
-                ImageTextWriter imageTextWriter = new ImageTextWriter();
-                Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
                 try
                 {
+                    string textToWrite = GenerateBeerText(weatherRoot);
+
+                    ImageTextWriter imageTextWriter = new ImageTextWriter();
+                    Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
+                }
+                catch
+                {
+                    using (System.Net.WebClient webClient = new System.Net.WebClient())
+                    {
+                        using (Stream stream = webClient.OpenRead("https://pngriver.com/wp-content/uploads/2017/12/number-4-digit-png-transparent-images-transparent-backgrounds-1024px-4_green.svg_.png"))
+                        {
+
+                            await cloudBlockBlob.UploadFromStreamAsync(stream);
+                        }
+                    }
+                }
+                try
+                {
+                    string textToWrite = GenerateBeerText(weatherRoot);
+
+                    ImageTextWriter imageTextWriter = new ImageTextWriter();
+                    Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
                     await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
                 }
                 catch
