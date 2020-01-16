@@ -66,12 +66,20 @@ namespace BierWeerPoging2
                     }
                 }
 
-                string textToWrite = GenerateBeerText(weatherRoot);
+                using (System.Net.WebClient webClient = new System.Net.WebClient())
+                {
+                    using (Stream stream = webClient.OpenRead("http://pngimg.com/uploads/number3/number3_PNG14965.png"))
+                    {
 
-                ImageTextWriter imageTextWriter = new ImageTextWriter();
-                Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
+                        await cloudBlockBlob.UploadFromStreamAsync(stream);
+                    }
+                }
+                //string textToWrite = GenerateBeerText(weatherRoot);
 
-                await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
+                //ImageTextWriter imageTextWriter = new ImageTextWriter();
+                //Stream renderedImage = imageTextWriter.WriteTextOnImage(responseContent, textToWrite);
+
+                //await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
             }
             catch (Exception e)
             {
