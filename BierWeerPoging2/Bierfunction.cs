@@ -53,7 +53,7 @@ namespace BierWeerPoging2
                 CloudQueueClient client = azureStorageAccount.CreateCloudQueueClient();
                 await CreateQueueMessage(cloudQueueMessage, client);
 
-                string result = String.Format("KAN JE HIER IN {0} BIERDRINKEN DEZE LINK GAAT JE DAT VERTELLEN G HIJ IS NIET AL TE LANG BESCHIKBAAR DUS WEES ER SNEL BIJ \n{1}", cityName,blobUrl);
+                string result = String.Format("Kan er hier {0} biergedronken worden Deze link bevat het antwoord: \n {1} \n De image is 20 minuten beschikbaar \n Als de image niet gevonden kan worden wacht dan een paar seconden en voer de link opnieuw in (dus niet refresh) ", cityName,blobUrl);
                 return new OkObjectResult(result);
             }
             catch(Exception e)
