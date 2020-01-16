@@ -35,19 +35,29 @@ namespace BierWeerPoging2
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(url);
                 Stream responseContent = await response.Content.ReadAsStreamAsync();
-                try
-                {
-                    string textToWrite = GenerateBeerText(weatherRoot);
+                string textToWrite = GenerateBeerText(weatherRoot);
 
+                try
+                { 
                     Stream renderedImage = WriteTextOnImage(responseContent, textToWrite);
                     await cloudBlockBlob.UploadFromStreamAsync(renderedImage);
                 }
                 catch
                 {
+                    //deze catch is bedoeld voor als de skiasharp niet meer werkt je krijgt dan een plaatje terug dat aangeeft of het te warm of te koud is
+                    string image = "";
+                    if (weatherRoot.Main.Temp < 15)
+                    {
+                        image = "https://thumbs.dreamstime.com/z/bier-de-sneeuw-65279107.jpg";
+                    }
+                    else
+                    {
+                        image = "https://fscomps.fotosearch.com/compc/CSP/CSP404/bier-in-woestijn-stock-fotografie__k4044056.jpg";
+                    }
+
                     using (System.Net.WebClient webClient = new System.Net.WebClient())
                     {
-                        using (Stream stream = webClient.OpenRead(String.Format("https://atlas.microsoft.com/map/static/png?subscription-key={0}&api-version=1.0&center={1},{2}", key,
-                        coordinates.Lon, coordinates.Lat)))
+                        using (Stream stream = webClient.OpenRead(image))
                         {
 
                             await cloudBlockBlob.UploadFromStreamAsync(stream);
@@ -57,8 +67,7 @@ namespace BierWeerPoging2
             }
             catch (Exception e)
             {
-                //mocht er iets misgaan in het ophalen van de image (azure maps doet weer eens moeilijk) upload dan deze image
-                //dan krijgt de client een beter error dan"geen image in deze blob"
+                //deze catch is bedoeld voor als de azure maps service kaput is
                 using (System.Net.WebClient webClient = new System.Net.WebClient())
                 {
                     using (Stream stream = webClient.OpenRead("http://www.ajeforum.com/wp-content/uploads/2018/04/Error_Culture_Florent_Darrault2-640x478.jpg"))
@@ -97,12 +106,6 @@ namespace BierWeerPoging2
         }
         private static Stream WriteTextOnImage(Stream responseContent, string textToWrite)
         {
-            ///oh nee system.drawing is niet iets wat we accepteren in azure functions
-            ///sixlaborers.imagesharp kan wel volgens internet advies
-            ///dat werkt ook niet
-            ///beter werkt skiasharp
-            ///eureka
-
             //maak canvasvanimage en plaats teksten
             SKBitmap sKBitmap = SKBitmap.Decode(responseContent);
             SKCanvas canvas = new SKCanvas(sKBitmap);
